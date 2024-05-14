@@ -1,4 +1,4 @@
-package Exercicios;
+package Recursividade;
 
 /**
  * Exercício 11 - Crie um método recursivo que receba uma string contendo uma expressão booleana e os 
