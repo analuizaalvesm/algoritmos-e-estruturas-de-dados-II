@@ -126,32 +126,13 @@ public class ListaDuplamenteEncadeada<E> {
     return atual.getItem();
   }
 
-  public void verificarItensIguais(E itemX, E itemY) {
-    Celula<E> atual = this.primeiro.getProximo();
-    if (vazia()) {
-      throw new IllegalArgumentException("A lista está vazia!");
-    }
-    while (atual != null) {
-      if (atual.getItem().equals(itemX)) {
-        throw new IllegalArgumentException("O item " + itemX + " já está na lista!");
-      }
-
-      if (atual.getItem().equals(itemY)) {
-        throw new IllegalArgumentException("O item " + itemX + " já está na lista!");
-      }
-      atual = atual.getProximo();
-    }
-
-    System.out.println("Os itens " + itemX + " e " + itemY + " não estão na lista!");
-  }
-
   public void trocar(E itemX, E itemY) {
     Celula<E> atual = this.primeiro.getProximo();
     Celula<E> celulaX = null;
     Celula<E> celulaY = null;
 
     if (vazia()) {
-      throw new IllegalArgumentException("A lista está vazia!");
+      throw new IllegalStateException("A lista está vazia!");
     }
 
     while (atual != null) {
@@ -173,5 +154,50 @@ public class ListaDuplamenteEncadeada<E> {
     E itemAux = celulaX.getItem();
     celulaX.setItem(celulaY.getItem());
     celulaY.setItem(itemAux);
+  }
+
+  public void criarBuracoMatriz(int coluna, int linha) {
+    Celula<E> atual = this.primeiro.getProximo();
+    Celula<E> celulaColuna = null;
+    Celula<E> celulaLinha = null;
+
+    if (vazia()) {
+      throw new IllegalStateException("A lista está vazia!");
+    }
+
+    while (atual != null) {
+      if (atual.getItem().equals(coluna)) {
+        celulaColuna = atual;
+      }
+
+      if (atual.getItem().equals(linha)) {
+        celulaLinha = atual;
+      }
+
+      atual = atual.getProximo();
+    }
+
+    if (celulaColuna == null || celulaLinha == null) {
+      throw new IllegalArgumentException("Os itens " + coluna + " e " + linha + " não estão na lista!");
+    }
+
+    Celula<E> buraco = new Celula<>();
+    buraco.setAnterior(celulaColuna);
+    buraco.setProximo(celulaLinha);
+
+    celulaColuna.setProximo(buraco);
+    celulaLinha.setAnterior(buraco);
+  }
+
+  public E[] toArray() {
+    E[] array = (E[]) new Object[this.tamanho];
+    Celula<E> atual = this.primeiro.getProximo();
+
+    for (int i = 0; i < this.tamanho; i++) {
+      array[i] = atual.getItem();
+      atual = atual.getProximo();
+    }
+
+    return array;
   }
 }
