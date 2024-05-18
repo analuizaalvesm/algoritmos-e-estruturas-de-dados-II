@@ -189,6 +189,7 @@ public class ListaDuplamenteEncadeada<E> {
     celulaLinha.setAnterior(buraco);
   }
 
+  @SuppressWarnings("unchecked")
   public E[] toArray() {
     E[] array = (E[]) new Object[this.tamanho];
     Celula<E> atual = this.primeiro.getProximo();
